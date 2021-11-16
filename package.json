@@ -2,7 +2,7 @@
   "name": "ccs-prototype-kit-model-interface",
   "version": "0.0.1",
   "description": "An interface for the ccs-prototype-kit to allow for the use of a sudo database and models",
-  "main": "lib/index.js",
+  "main": "src/index",
   "types": "",
   "scripts": {
     "build": "rm -rf ./lib/ && tsc",
@@ -10,7 +10,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/express-session": "^1.17.4",
