@@ -1,7 +1,7 @@
 import frameworkConfig from '../frameworkConfig'
-import { Condition } from '../types/models/model'
+import { Condition } from '../@types/models/model'
 import { getRow, getTable } from './dataInterface'
-import { TableRow, Tables } from '../types/data/tables'
+import { TableRow, Tables } from '../@types/data/tables'
 
 const STATIC_DATA_PATH: string = frameworkConfig.staticDataPath
 

@@ -5,11 +5,11 @@ import Model from '../model'
 import StaticModel from '../static/staticModel'
 import StaticModelValidator from '../../validation/validators/staticModelValidator'
 import Validator from '../../validation/validator'
-import { ActiveModelInterface, Condition, ModelData, ModelError } from '../../types/models/model'
+import { ActiveModelInterface, Condition, ModelData, ModelError } from '../../@types/models/model'
 import { getActiveRow, getActiveTable, setActiveRow } from '../../data/activeDataInterface'
 import { Request } from 'express'
-import { Schema, Scheme } from '../../types/validation/schema'
-import { TableRow } from '../../types/data/tables'
+import { Schema, Scheme } from '../../@types/validation/schema'
+import { TableRow } from '../../@types/data/tables'
 
 abstract class ActiveModel extends Model implements ActiveModelInterface {
   abstract tableName: string

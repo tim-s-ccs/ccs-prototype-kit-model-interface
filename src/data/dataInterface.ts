@@ -1,7 +1,7 @@
 import RowNotFoundError from '../errors/rowNotFoundError'
 import TableNotFoundError from '../errors/tableNotFoundError'
-import { getRowOptions, getTableOptions, getTablesFunction } from '../types/data/dataInterface'
-import { TableRow } from '../types/data/tables'
+import { getRowOptions, getTableOptions, getTablesFunction } from '../@types/data/dataInterface'
+import { TableRow } from '../@types/data/tables'
 
 const getTable = (getTables: getTablesFunction, options: getTableOptions): Array<TableRow> => {
   let table: Array<TableRow> =  getTables(options.req)[options.tableName]

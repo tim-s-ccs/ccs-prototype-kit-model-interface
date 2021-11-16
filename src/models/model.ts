@@ -1,4 +1,4 @@
-import { ModelData, ModelInterface } from '../types/models/model'
+import { ModelData, ModelInterface } from '../@types/models/model'
 
 abstract class Model implements ModelInterface {
   data: ModelData

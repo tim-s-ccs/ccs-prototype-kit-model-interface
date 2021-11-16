@@ -1,5 +1,5 @@
 import InputValidator from '../inputValidator'
-import { InclusionValidatorOptions } from '../../../types/validation/validator'
+import { InclusionValidatorOptions } from '../../../@types/validation/validator'
 
 class InclusionValidator extends InputValidator {
   options: InclusionValidatorOptions = this.options as InclusionValidatorOptions

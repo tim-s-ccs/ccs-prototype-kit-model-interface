@@ -2,11 +2,11 @@ import frameworkConfig from '../frameworkConfig'
 import IDMismatchError from '../errors/idMismatchError'
 import KeysDoNotMatchError from '../errors/keysDoNotMatchError'
 import UnexpectedDataTypeError from '../errors/unexpectedDataTypeError'
-import { ActiveDataSchema, ActiveDataScheme } from '../types/data/activeDataSchema'
-import { Condition, ModelData } from '../types/models/model'
+import { ActiveDataSchema, ActiveDataScheme } from '../@types/data/activeDataSchema'
+import { Condition, ModelData } from '../@types/models/model'
 import { getRow, getTable } from './dataInterface'
 import { Request } from 'express'
-import { TableRow, Tables } from '../types/data/tables'
+import { TableRow, Tables } from '../@types/data/tables'
 
 const ACTIVE_DATA_SCHEMA_PATH: string = frameworkConfig.activeDataSchemaPath
 

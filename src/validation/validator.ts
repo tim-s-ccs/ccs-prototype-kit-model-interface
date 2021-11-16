@@ -1,5 +1,5 @@
-import { ValidatorInterface } from '../types/validation/validator'
-import { ValidatorOptions } from '../types/validation/validator'
+import { ValidatorInterface } from '../@types/validation/validator'
+import { ValidatorOptions } from '../@types/validation/validator'
 
 abstract class Validator implements ValidatorInterface {
   options: ValidatorOptions
