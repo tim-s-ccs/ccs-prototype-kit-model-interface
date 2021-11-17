@@ -1,6 +1,6 @@
 import ActiveModel from '../../models/active/activeModel'
 import Validator from '../validator'
-import { CustomValidatorInterface } from '../../@types/validation/validator'
+import { CustomValidatorInterface } from '../../types/validation/validator'
 
 abstract class CustomValidator extends Validator implements CustomValidatorInterface {
   model: ActiveModel

@@ -1,5 +1,5 @@
 import Model from '../model'
-import { Condition, ModelData, StaticModelInterface } from '../../@types/models/model'
+import { Condition, ModelData, StaticModelInterface } from '../../types/models/model'
 import { getStaticRow, getStaticTable } from '../../data/staticDataInterface'
 
 abstract class StaticModel extends Model implements StaticModelInterface {

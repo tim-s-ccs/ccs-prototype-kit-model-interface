@@ -1,6 +1,6 @@
 import StaticModel from '../../models/static/staticModel'
 import Validator from '../validator'
-import { StaticModelValidatorInterface } from '../../@types/validation/validator'
+import { StaticModelValidatorInterface } from '../../types/validation/validator'
 
 class StaticModelValidator extends Validator implements StaticModelValidatorInterface {
   model: StaticModel
