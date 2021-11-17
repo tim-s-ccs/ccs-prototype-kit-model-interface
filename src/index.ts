@@ -8,3 +8,15 @@ export { default as CustomValidator } from './validation/validators/customValida
 export { default as InclusionValidator } from './validation/validators/inputValidators/inclusionValidator'
 export { default as NumberValidator } from './validation/validators/inputValidators/numberValidator'
 export { default as StringValidator } from './validation/validators/inputValidators/stringValidator'
+
+/* Export all the types */
+// Export the data types
+export { ActiveDataScheme, ActiveDataSchema} from './types/data/activeDataSchema'
+export { DefaultRow } from './types/data/tables'
+
+// Export the model types
+export { ModelError, ListError, Condition } from './types/models/model'
+
+// Export validation types
+export { Schema } from './types/validation/schema'
+export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, ValidatorInterface } from './types/validation/validator'
