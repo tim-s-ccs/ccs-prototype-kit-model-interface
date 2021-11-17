@@ -1,6 +1,6 @@
-type AppConfig = {
+type FrameworkConfig = {
   staticDataPath: string
   activeDataSchemaPath: string
 }
 
-export default AppConfig
+export default FrameworkConfig

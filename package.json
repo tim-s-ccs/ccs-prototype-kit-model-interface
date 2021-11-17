@@ -2,10 +2,14 @@
   "name": "ccs-prototype-kit-model-interface",
   "version": "0.0.1",
   "description": "An interface for the ccs-prototype-kit to allow for the use of a sudo database and models",
-  "main": "src/index",
-  "types": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "rm -rf ./lib/ && tsc",
+    "build": "rm -rf ./dist/ && tsc",
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
