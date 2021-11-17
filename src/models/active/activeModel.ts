@@ -22,15 +22,13 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     this.schema = schema
   }
 
-  static _find = (req: Request, tableName: string, id: number): ModelData => {
-    return getActiveRow(req, tableName, id)
-  }
+  protected static _find = getActiveRow
 
-  static _all = (req: Request, tableName: string): Array<ModelData> => {
+  protected static _all = (req: Request, tableName: string): Array<ModelData> => {
     return getActiveTable(req, tableName)
   }
 
-  static _where = (req: Request, tableName: string, conditions: Array<Condition>): Array<ModelData> => {
+  protected static _where = (req: Request, tableName: string, conditions: Array<Condition>): Array<ModelData> => {
     return getActiveTable(req, tableName, conditions)
   }
 

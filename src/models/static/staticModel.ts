@@ -3,15 +3,13 @@ import { Condition, ModelData, StaticModelInterface } from '../../types/models/m
 import { getStaticRow, getStaticTable } from '../../data/staticDataInterface'
 
 abstract class StaticModel extends Model implements StaticModelInterface {
-  static _find = (tableName: string, id: number): ModelData => {
-    return getStaticRow(tableName, id)
-  }
+  protected static _find = getStaticRow
 
-  static _all = (tableName: string): Array<ModelData> => {
+  protected static _all = (tableName: string): Array<ModelData> => {
     return getStaticTable(tableName)
   }
 
-  static _where = (tableName: string, conditions: Array<Condition>): Array<ModelData> => {
+  protected static _where = (tableName: string, conditions: Array<Condition>): Array<ModelData> => {
     return getStaticTable(tableName, conditions)
   }
 }

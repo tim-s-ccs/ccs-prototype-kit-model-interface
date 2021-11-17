@@ -6,7 +6,6 @@ declare module 'express-session' {
   interface Session {
     data: {
       tables: Tables
-      [key: string]: any
     }
   }
 }
