@@ -1,4 +1,4 @@
-import StaticModel from '../../models/static/staticModel'
+import StaticModel from '../../models/staticModel'
 import Validator from '../validator'
 import { StaticModelValidatorInterface } from '../../types/validation/validator'
 

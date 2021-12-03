@@ -1,5 +1,5 @@
-import ActiveModel from '../../models/active/activeModel'
-import StaticModel from '../../models/static/staticModel'
+import ActiveModel from '../../models/activeModel'
+import StaticModel from '../../models/staticModel'
 
 export type ValidatorOptions = {
   on?: string[]

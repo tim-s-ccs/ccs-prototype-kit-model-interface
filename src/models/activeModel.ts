@@ -1,25 +1,25 @@
-import cast from '../../utils/cast'
-import CustomValidator from '../../validation/validators/customValidator'
-import InputValidator from '../../validation/validators/inputValidator'
-import Model from '../model'
-import StaticModel from '../static/staticModel'
-import StaticModelValidator from '../../validation/validators/staticModelValidator'
-import Validator from '../../validation/validator'
-import { ActiveModelInterface, Condition, ModelData, ModelError } from '../../types/models/model'
-import { getActiveRow, getActiveTable, setActiveRow } from '../../data/activeDataInterface'
+import cast from '../utils/cast'
+import CustomValidator from '../validation/validators/customValidator'
+import InputValidator from '../validation/validators/inputValidator'
+import Model from './model'
+import StaticModel from './staticModel'
+import StaticModelValidator from '../validation/validators/staticModelValidator'
+import Validator from '../validation/validator'
+import { ActiveModelInterface, Condition, ModelData, ModelError } from '../types/models/model'
+import { getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
 import { Request } from 'express'
-import { Schema, Scheme } from '../../types/validation/schema'
-import { TableRow } from '../../types/data/tables'
+import { TableRow } from '../types/data/tables'
+import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
 
 abstract class ActiveModel extends Model implements ActiveModelInterface {
   abstract tableName: string
-  schema: Schema
+  validationSchema: ValidationSchema
   errors: {[key: string]: ModelError} = {}
 
-  constructor(data: ModelData, schema: Schema = {}) {
+  constructor(data: ModelData, validationSchema: ValidationSchema = {}) {
     super(data)
 
-    this.schema = schema
+    this.validationSchema = validationSchema
   }
 
   protected static _find = getActiveRow
@@ -35,24 +35,24 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   validate = (call: string) => {
     this.errors = {}
 
-    if (this.schema.inputValidations !== undefined){
-      this.schema.inputValidations.forEach(inputValidation => {
+    if (this.validationSchema.inputValidations !== undefined){
+      this.validationSchema.inputValidations.forEach(inputValidation => {
         const attributeValidation: InputValidator = new (inputValidation.validator as any)(this.data[inputValidation.attribute], inputValidation.options)
 
         this.validateAttribute(call, inputValidation, attributeValidation)
       })
     }
 
-    if (this.schema.customValidations !== undefined) {
-      this.schema.customValidations.forEach(customValidation => {
+    if (this.validationSchema.customValidations !== undefined) {
+      this.validationSchema.customValidations.forEach(customValidation => {
         const attributeValidation: CustomValidator = new (customValidation.validator as any)(this, customValidation.options)
 
         this.validateAttribute(call, customValidation, attributeValidation)
       })
     }
 
-    if (this.schema.staticModelValidations !== undefined) {
-      this.schema.staticModelValidations.forEach(staticModelValidation => {
+    if (this.validationSchema.staticModelValidations !== undefined) {
+      this.validationSchema.staticModelValidations.forEach(staticModelValidation => {
         const attributeValidation: StaticModelValidator = new StaticModelValidator(this.data[staticModelValidation.attribute], staticModelValidation.options)
 
         this.validateAttribute(call, staticModelValidation, attributeValidation)
@@ -72,7 +72,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     return Object.keys(this.errors).length === 0
   }
 
-  private validateAttribute = (call: string, validation: Scheme, attributeValidation: Validator) => {
+  private validateAttribute = (call: string, validation: ValidationScheme, attributeValidation: Validator) => {
     if (!attributeValidation.valid(call)) {
       this.errors[validation.attribute] = {
         error: attributeValidation.error,

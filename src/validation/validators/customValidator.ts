@@ -1,4 +1,4 @@
-import ActiveModel from '../../models/active/activeModel'
+import ActiveModel from '../../models/activeModel'
 import Validator from '../validator'
 import { CustomValidatorInterface } from '../../types/validation/validator'
 

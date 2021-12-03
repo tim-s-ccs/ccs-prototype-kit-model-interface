@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import { Schema } from '../validation/schema'
+import { ValidationSchema } from '../validation/validationSchema'
 
 export interface ModelInterface {
   data: ModelData
@@ -7,7 +7,7 @@ export interface ModelInterface {
 
 export interface ActiveModelInterface {
   tableName: string
-  schema: Schema
+  validationSchema: ValidationSchema
   errors: {[key: string]: ModelError}
   attributes(): object
   validate(call: string): boolean

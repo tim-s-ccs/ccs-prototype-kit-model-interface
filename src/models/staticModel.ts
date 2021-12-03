@@ -1,6 +1,6 @@
-import Model from '../model'
-import { Condition, ModelData, StaticModelInterface } from '../../types/models/model'
-import { getStaticRow, getStaticTable } from '../../data/staticDataInterface'
+import Model from './model'
+import { Condition, ModelData, StaticModelInterface } from '../types/models/model'
+import { getStaticRow, getStaticTable } from '../data/staticDataInterface'
 
 abstract class StaticModel extends Model implements StaticModelInterface {
   protected static _find = getStaticRow

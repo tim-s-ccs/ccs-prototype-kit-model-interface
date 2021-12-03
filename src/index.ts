@@ -1,6 +1,6 @@
 // Export the model classes
-export { default as ActiveModel } from './models/active/activeModel'
-export { default as StaticModel } from './models/static/staticModel'
+export { default as ActiveModel } from './models/activeModel'
+export { default as StaticModel } from './models/staticModel'
 
 // Export the validations
 export { default as StaticModelValidator } from './validation/validators/staticModelValidator'
@@ -18,5 +18,5 @@ export { DefaultRow } from './types/data/tables'
 export { ModelError, ListError, Condition } from './types/models/model'
 
 // Export validation types
-export { Schema } from './types/validation/schema'
+export { ValidationSchema } from './types/validation/validationSchema'
 export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, ValidatorInterface } from './types/validation/validator'
