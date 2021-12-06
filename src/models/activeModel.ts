@@ -5,7 +5,7 @@ import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
-import { ActiveModelInterface, Condition, DataInterfaceFunction, ModelData, ModelError } from '../types/models/model'
+import { ActiveModelInterface, Condition, DataInterfaceFunction, ModelData, ModelError, ModelSchema } from '../types/models/model'
 import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
 import { Request } from 'express'
 import { TableRow } from '../types/data/tables'
@@ -13,13 +13,13 @@ import { ValidationSchema, ValidationScheme } from '../types/validation/validati
 
 abstract class ActiveModel extends Model implements ActiveModelInterface {
   abstract tableName: string
-  validationSchema: ValidationSchema
+  abstract modelSchema: ModelSchema
+  abstract validationSchema: ValidationSchema
+
   errors: {[key: string]: ModelError} = {}
 
-  constructor(data: ModelData, validationSchema: ValidationSchema = {}) {
+  constructor(data: ModelData) {
     super(data)
-
-    this.validationSchema = validationSchema
   }
 
   protected static _find = getActiveRow

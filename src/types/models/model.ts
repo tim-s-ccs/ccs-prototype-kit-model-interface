@@ -7,6 +7,7 @@ export interface ModelInterface {
 
 export interface ActiveModelInterface {
   tableName: string
+  modelSchema: ModelSchema
   validationSchema: ValidationSchema
   errors: {[key: string]: ModelError}
   attributes(): object
@@ -39,3 +40,6 @@ export type Condition = {
 }
 
 export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ModelData) => void
+
+// TODO: Possibly look at updating this
+export type ModelSchema = { [key: string]: Function }

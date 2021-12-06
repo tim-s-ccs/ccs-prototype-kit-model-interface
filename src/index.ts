@@ -15,7 +15,7 @@ export { ActiveDataScheme, ActiveDataSchema} from './types/data/activeDataSchema
 export { DefaultRow } from './types/data/tables'
 
 // Export the model types
-export { ModelError, ListError, Condition } from './types/models/model'
+export { ModelSchema, ModelError, ListError, Condition } from './types/models/model'
 
 // Export validation types
 export { ValidationSchema } from './types/validation/validationSchema'
