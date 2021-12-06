@@ -5,8 +5,8 @@ import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
-import { ActiveModelInterface, Condition, ModelData, ModelError } from '../types/models/model'
-import { getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
+import { ActiveModelInterface, Condition, DataInterfaceFunction, ModelData, ModelError } from '../types/models/model'
+import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
 import { Request } from 'express'
 import { TableRow } from '../types/data/tables'
 import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
@@ -96,6 +96,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
   attributes = (): TableRow => {
     return Object.fromEntries(Object.keys(this.data).map((attribute) => {
+      console.log(this.data[attribute])
       if(this.data[attribute] instanceof Model) {
         return [`${attribute}ID`, (this.data[attribute] as Model).data.id]
       } else {
@@ -123,11 +124,25 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   }
 
   save = (req: Request) => {
+    this._save(req, setActiveRow)
+  }
+
+  create = (req: Request): boolean => {
+    if (this.validate('new')) {
+      this._save(req, addActiveRow)
+
+      return true
+    } else {
+      return false
+    }
+  }
+
+  private _save = (req: Request, dataInterface: DataInterfaceFunction) => {
     const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
 
-    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel).save(req))
+    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(req, dataInterface))
 
-    setActiveRow(req, this.tableName, this.data.id, this.attributes())
+    dataInterface(req, this.tableName, this.data.id, this.attributes())
   }
 }
 

@@ -37,3 +37,5 @@ export type Condition = {
   attribute: string
   value: any
 }
+
+export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ModelData) => void
