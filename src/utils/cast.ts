@@ -1,14 +1,14 @@
-const cast = (input: string, targetType: string): any => {
+const cast = (input: string, targetType: NumberConstructor|StringConstructor|BooleanConstructor): any => {
   switch(targetType) {
-  case 'number':
+  case Number:
     if (input.length > 0) {
       return Number(input)
     } else {
       return undefined
     }
-  case 'boolean':
+  case Boolean:
     return String(input) === 'true'
-  case 'string':
+  case String:
     return String(input)
   }
 }

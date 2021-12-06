@@ -1,3 +1,4 @@
+import { ActiveModel, StaticModel } from '../..'
 import { Request } from 'express'
 import { ValidationSchema } from '../validation/validationSchema'
 
@@ -41,5 +42,4 @@ export type Condition = {
 
 export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ModelData) => void
 
-// TODO: Possibly look at updating this
-export type ModelSchema = { [key: string]: Function }
+export type ModelSchema = { [key: string]: NumberConstructor|StringConstructor|BooleanConstructor|typeof ActiveModel|typeof StaticModel }

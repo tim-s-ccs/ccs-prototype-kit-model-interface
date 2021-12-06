@@ -22,6 +22,8 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     super(data)
   }
 
+  // TODO: Possilby static init model
+
   protected static _find = getActiveRow
 
   protected static _all = (req: Request, tableName: string): Array<ModelData> => {
@@ -41,6 +43,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
     if (this.validationSchema.inputValidations !== undefined){
       this.validationSchema.inputValidations.forEach(inputValidation => {
+        // TODO: Chnage to somthing that is not any
         const attributeValidation: InputValidator = new (inputValidation.validator as any)(this.data[inputValidation.attribute], inputValidation.options)
 
         this.validateAttribute(call, inputValidation, attributeValidation)
@@ -49,6 +52,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
     if (this.validationSchema.customValidations !== undefined) {
       this.validationSchema.customValidations.forEach(customValidation => {
+        // TODO: Chnage to somthing that is not any
         const attributeValidation: CustomValidator = new (customValidation.validator as any)(this, customValidation.options)
 
         this.validateAttribute(call, customValidation, attributeValidation)
@@ -95,10 +99,16 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   }
 
   attributes = (): TableRow => {
-    return Object.fromEntries(Object.keys(this.data).map((attribute) => {
-      console.log(this.data[attribute])
-      if(this.data[attribute] instanceof Model) {
-        return [`${attribute}ID`, (this.data[attribute] as Model).data.id]
+    return Object.fromEntries(Object.keys(this.modelSchema).map((attribute) => {
+      if(this.modelSchema[attribute].prototype instanceof Model) {
+        let attributeValue: number|undefined
+
+        if (this.data[attribute] === undefined) {
+          attributeValue = undefined
+        } else {
+          attributeValue = (this.data[attribute] as Model).data.id
+        }
+        return [`${attribute}ID`, attributeValue]
       } else {
         return [attribute, this.data[attribute]]
       }
@@ -106,24 +116,35 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   }
 
   assignAttributes = (data: ModelData): void  => {
-    for (const attribute in this.data) {
+    for (const attribute in this.modelSchema) {
       if (attribute in data) {
-        if (this.data[attribute] instanceof ActiveModel) {
-          (this.data[attribute] as ActiveModel).assignAttributes(data[attribute])
-        } else if (this.data[attribute] instanceof StaticModel) {
-          const id = cast(data[attribute], 'number')
+        const attributeConstructor = this.modelSchema[attribute]
 
-          if ((this.data[attribute] as StaticModel).data.id !== id) {
-            this.data[attribute] = new this.data[attribute].constructor(id)
+        if (attributeConstructor.prototype instanceof ActiveModel) {
+          (this.data[attribute] as ActiveModel).assignAttributes(data[attribute])
+        } else if (attributeConstructor.prototype instanceof StaticModel) {
+          const id = cast(data[attribute], Number)
+
+          if (this.data[attribute] === undefined || (this.data[attribute] as StaticModel).data.id !== id) {
+            // TODO: Chnage to somthing that is not any
+            this.data[attribute] = (attributeConstructor as any).find(id)
           }
         } else {
-          this.data[attribute] = cast(data[attribute], typeof this.data[attribute])
+          this.data[attribute] = cast(data[attribute], attributeConstructor as NumberConstructor|StringConstructor|BooleanConstructor)
         }
       }
     }
   }
 
-  save = (req: Request) => {
+  private _save = (req: Request, dataInterface: DataInterfaceFunction): void => {
+    const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
+
+    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(req, dataInterface))
+
+    dataInterface(req, this.tableName, this.data.id, this.attributes())
+  }
+
+  save = (req: Request): void => {
     this._save(req, setActiveRow)
   }
 
@@ -135,14 +156,6 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     } else {
       return false
     }
-  }
-
-  private _save = (req: Request, dataInterface: DataInterfaceFunction) => {
-    const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
-
-    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(req, dataInterface))
-
-    dataInterface(req, this.tableName, this.data.id, this.attributes())
   }
 }
 

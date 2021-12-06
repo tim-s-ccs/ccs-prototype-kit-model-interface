@@ -33,12 +33,6 @@ const validateSentDataSet = (req: Request, tableName: string, id: number, sentDa
   const rowKeys: Array<string> = Object.keys(rowScheme).sort()
   const sentRowKeys: Array<string> = Object.keys(sentData).sort()
 
-  console.log('----------------')
-  console.log(`rowScheme ${rowScheme}`)
-  console.log(`rowKeys ${rowKeys}`)
-  console.log(`sentRowKeys ${sentRowKeys}`)
-  console.log('----------------')
-
   if (!(rowKeys.length === sentRowKeys.length && rowKeys.every((key: string, index: number) => key === sentRowKeys[index]))) {
     throw new KeysDoNotMatchError()
   }
@@ -66,12 +60,6 @@ const validateSentDataNew = (req: Request, tableName: string, id: number, sentDa
 
   const rowKeys: Array<string> = Object.keys(rowScheme).sort()
   const sentRowKeys: Array<string> = Object.keys(sentData).sort()
-
-  console.log('----------------')
-  console.log(`rowScheme ${rowScheme}`)
-  console.log(`rowKeys ${rowKeys}`)
-  console.log(`sentRowKeys ${sentRowKeys}`)
-  console.log('----------------')
 
   if (!(rowKeys.length === sentRowKeys.length && rowKeys.every((key: string, index: number) => key === sentRowKeys[index]))) {
     throw new KeysDoNotMatchError()
