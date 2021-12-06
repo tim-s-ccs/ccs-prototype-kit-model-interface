@@ -20,3 +20,6 @@ export { ModelError, ListError, Condition } from './types/models/model'
 // Export validation types
 export { ValidationSchema } from './types/validation/validationSchema'
 export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, ValidatorInterface } from './types/validation/validator'
+
+// Export Utilities
+export { default as utils } from './utils/utils'

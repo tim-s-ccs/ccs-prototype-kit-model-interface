@@ -32,6 +32,10 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     return getActiveTable(req, tableName, conditions)
   }
 
+  protected static nextID = (req: Request, tableName: string): number => {
+    return Math.max(...this._all(req, tableName).map(modelData => modelData.id)) + 1
+  }
+
   validate = (call: string) => {
     this.errors = {}
 
