@@ -39,3 +39,5 @@ export interface CustomValidatorInterface extends ValidatorInterface {
 export interface StaticModelValidatorInterface extends ValidatorInterface {
   model: StaticModel
 }
+
+export type ValidationCondition<T extends ActiveModel> = (model: T) => boolean

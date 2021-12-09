@@ -19,7 +19,7 @@ export { ModelSchema, ModelError, ListError, Condition } from './types/models/mo
 
 // Export validation types
 export { ValidationSchema } from './types/validation/validationSchema'
-export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, ValidatorInterface } from './types/validation/validator'
+export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, ValidatorInterface, ValidationCondition } from './types/validation/validator'
 
 // Export Utilities
 export { default as utils } from './utils/utils'
