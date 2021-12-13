@@ -7,6 +7,7 @@ export interface ModelInterface {
 }
 
 export interface ActiveModelInterface {
+  data: ActiveModelData
   tableName: string
   modelSchema: ModelSchema
   validationSchema: ValidationSchema
@@ -21,8 +22,11 @@ export interface ActiveModelInterface {
 export interface StaticModelInterface {
 }
 
-export type ModelData = {
+export type ActiveModelData = ModelData & {
   id: number
+}
+
+export type ModelData = {
   [key: string]: any
 }
 
@@ -41,6 +45,6 @@ export type Condition = {
   value: any
 }
 
-export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ModelData) => void
+export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ActiveModelData) => void
 
 export type ModelSchema = { [key: string]: NumberConstructor|StringConstructor|BooleanConstructor|typeof ActiveModel|typeof StaticModel }

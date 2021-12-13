@@ -3,7 +3,7 @@ import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
-import { ActiveModelInterface, Condition, DataInterfaceFunction, ModelData, ModelError, ModelSchema } from '../types/models/model'
+import { ActiveModelData, ActiveModelInterface, Condition, DataInterfaceFunction, ModelError, ModelSchema } from '../types/models/model'
 import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
 import { ErrorMessages, GenericValidatorOptions } from '../types/validation/validator'
 import { Request } from 'express'
@@ -11,13 +11,15 @@ import { TableRow } from '../types/data/tables'
 import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
 
 abstract class ActiveModel extends Model implements ActiveModelInterface {
+  data: ActiveModelData = this.data
+
   abstract tableName: string
   abstract modelSchema: ModelSchema
   abstract validationSchema: ValidationSchema
 
   errors: {[key: string]: ModelError} = {}
 
-  constructor(data: ModelData) {
+  constructor(data: ActiveModelData) {
     super(data)
   }
 
@@ -25,11 +27,11 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
   protected static _find = getActiveRow
 
-  protected static _all = (req: Request, tableName: string): Array<ModelData> => {
+  protected static _all = (req: Request, tableName: string): Array<ActiveModelData> => {
     return getActiveTable(req, tableName)
   }
 
-  protected static _where = (req: Request, tableName: string, conditions: Array<Condition>): Array<ModelData> => {
+  protected static _where = (req: Request, tableName: string, conditions: Array<Condition>): Array<ActiveModelData> => {
     return getActiveTable(req, tableName, conditions)
   }
 
@@ -112,7 +114,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     })) as TableRow
   }
 
-  assignAttributes = (data: ModelData): void  => {
+  assignAttributes = (data: ActiveModelData): void  => {
     for (const attribute in this.modelSchema) {
       if (attribute in data) {
         const attributeConstructor = this.modelSchema[attribute]
