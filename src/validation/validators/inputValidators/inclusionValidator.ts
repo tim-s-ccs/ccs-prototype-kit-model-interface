@@ -1,11 +1,12 @@
 import InputValidator from '../inputValidator'
-import { InclusionValidatorOptions } from '../../../types/validation/validator'
+import { ActiveModel } from '../../..'
+import { ErrorMessages, InclusionValidatorOptions } from '../../../types/validation/validator'
 
 class InclusionValidator extends InputValidator {
-  options: InclusionValidatorOptions = this.options as InclusionValidatorOptions
+  options: InclusionValidatorOptions = this.options
 
-  constructor(input: string, options: InclusionValidatorOptions) {
-    super(input, options)
+  constructor(model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: InclusionValidatorOptions) {
+    super(model, attribute, errorMessages, options)
   }
 
   _validate = (): boolean => {

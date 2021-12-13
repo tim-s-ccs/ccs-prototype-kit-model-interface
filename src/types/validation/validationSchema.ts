@@ -1,19 +1,22 @@
-import CustomValidator from '../../validation/validators/customValidator'
-import InputValidator from '../../validation/validators/inputValidator'
-import { ValidatorOptions } from './validator'
+import {
+  CustomValidatorConstructor,
+  ErrorMessages,
+  FullValidatorOptions,
+  InputValidatorConstructor,
+} from './validator'
 
 export type ValidationScheme = {
   attribute: string
-  options: ValidatorOptions & {[key: string]: any}
-  errorMessages: {[key: string]: string}
+  options: FullValidatorOptions
+  errorMessages: ErrorMessages
 }
 
 export type InputValidationScheme = ValidationScheme & {
-  validator: typeof InputValidator
+  validator: InputValidatorConstructor
 }
 
 export type CustomeValidationScheme = ValidationScheme & {
-  validator: typeof CustomValidator
+  validator: CustomValidatorConstructor
 }
 
 export type StaticModelValidationScheme = ValidationScheme

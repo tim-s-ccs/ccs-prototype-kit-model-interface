@@ -1,11 +1,13 @@
 import InputValidator from '../inputValidator'
-import { NumberValidatorOptions } from '../../../types/validation/validator'
+import { ActiveModel } from '../../..'
+import { ErrorMessages, NumberValidatorOptions } from '../../../types/validation/validator'
 
 class NumberValidator extends InputValidator {
-  options: NumberValidatorOptions = this.options as NumberValidatorOptions
+  input: number = this.input
+  options: NumberValidatorOptions = this.options
 
-  constructor(input: number, options: NumberValidatorOptions) {
-    super(input, options)
+  constructor(model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: NumberValidatorOptions) {
+    super(model, attribute, errorMessages, options)
   }
 
   _validate = () => {

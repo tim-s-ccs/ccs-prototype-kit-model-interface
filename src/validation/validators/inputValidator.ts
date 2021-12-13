@@ -1,13 +1,14 @@
 import Validator from '../validator'
-import { InputValidatorInterface } from '../../types/validation/validator'
+import { ActiveModel } from '../..'
+import { ErrorMessages, InputValidatorInterface, ValidatorOptions } from '../../types/validation/validator'
 
 abstract class InputValidator extends Validator implements InputValidatorInterface {
-  input: any
+  input: string|number|boolean
 
-  constructor(input: any, options: {[key: string]: any}={}) {
-    super(options)
+  constructor(model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: ValidatorOptions) {
+    super(model, attribute, errorMessages, options)
 
-    this.input = input
+    this.input = this.model.data[attribute]
   }
 }
 

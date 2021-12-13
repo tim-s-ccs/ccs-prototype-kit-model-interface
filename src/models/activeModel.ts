@@ -1,12 +1,11 @@
 import cast from '../utils/cast'
-import CustomValidator from '../validation/validators/customValidator'
-import InputValidator from '../validation/validators/inputValidator'
 import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
 import { ActiveModelInterface, Condition, DataInterfaceFunction, ModelData, ModelError, ModelSchema } from '../types/models/model'
 import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
+import { ErrorMessages, FullValidatorOptions } from '../types/validation/validator'
 import { Request } from 'express'
 import { TableRow } from '../types/data/tables'
 import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
@@ -43,27 +42,19 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
     if (this.validationSchema.inputValidations !== undefined){
       this.validationSchema.inputValidations.forEach(inputValidation => {
-        // TODO: Chnage to somthing that is not any
-        const attributeValidation: InputValidator = new (inputValidation.validator as any)(this.data[inputValidation.attribute], inputValidation.options)
-
-        this.validateAttribute(call, inputValidation, attributeValidation)
+        this.validateAttribute(call, inputValidation, inputValidation.validator)
       })
     }
 
     if (this.validationSchema.customValidations !== undefined) {
       this.validationSchema.customValidations.forEach(customValidation => {
-        // TODO: Chnage to somthing that is not any
-        const attributeValidation: CustomValidator = new (customValidation.validator as any)(this, customValidation.options)
-
-        this.validateAttribute(call, customValidation, attributeValidation)
+        this.validateAttribute(call, customValidation, customValidation.validator)
       })
     }
 
     if (this.validationSchema.staticModelValidations !== undefined) {
       this.validationSchema.staticModelValidations.forEach(staticModelValidation => {
-        const attributeValidation: StaticModelValidator = new StaticModelValidator(this.data[staticModelValidation.attribute], staticModelValidation.options)
-
-        this.validateAttribute(call, staticModelValidation, attributeValidation)
+        this.validateAttribute(call, staticModelValidation, StaticModelValidator)
       })
     }
 
@@ -80,12 +71,16 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     return Object.keys(this.errors).length === 0
   }
 
-  private validateAttribute = (call: string, validation: ValidationScheme, attributeValidation: Validator) => {
-    if (!attributeValidation.valid(call)) {
-      this.errors[validation.attribute] = {
-        error: attributeValidation.error,
-        errorMessage: validation.errorMessages[attributeValidation.error]
-      }
+  private validateAttribute = (call: string, validation: ValidationScheme, ValidatorSubclass: new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: FullValidatorOptions) => Validator) => {
+    const attributeValidation: Validator = new ValidatorSubclass(this, validation.attribute, validation.errorMessages, validation.options)
+
+    attributeValidation.valid(call)
+  }
+
+  addError = (attribute: string, error: string, message: string): void => {
+    this.errors[attribute] = {
+      error: error,
+      errorMessage: message
     }
   }
 

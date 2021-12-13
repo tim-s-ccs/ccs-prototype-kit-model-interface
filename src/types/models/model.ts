@@ -13,6 +13,7 @@ export interface ActiveModelInterface {
   errors: {[key: string]: ModelError}
   attributes(): object
   validate(call: string): boolean
+  addError(attribute: string, error: string, message: string): void
   errorList(): Array<ListError>
   save(req: Request): void
 }

@@ -1,9 +1,12 @@
-import ActiveModel from '../../models/activeModel'
+import InputValidator from '../../validation/validators/inputValidator'
+import Model from '../../models/model'
 import StaticModel from '../../models/staticModel'
+import Validator from '../../validation/validator'
+import { ActiveModel, CustomValidator, StaticModelValidator } from '../..'
 
 export type ValidatorOptions = {
   on?: string[]
-  condition?: boolean
+  conditions?: ValidationCondition<Model>[]
 }
 
 export type StringValidatorOptions = ValidatorOptions & {
@@ -21,23 +24,44 @@ export type NumberValidatorOptions = ValidatorOptions & {
   greaterThan?: number
   lessThan?: number
 }
+
+export type StaticModelValidatorOptions = ValidatorOptions & {
+  staticModel: StaticModel
+}
+
 export interface ValidatorInterface {
+  model: ActiveModel
+  attribute: string
+  errorMessages: ErrorMessages
   options: ValidatorOptions
   condition: boolean
   error?: string
   valid(call: string): boolean
 }
 
+export type ValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: FullValidatorOptions) => Validator
+
 export interface InputValidatorInterface extends ValidatorInterface {
-  input: any
+  input: string|number|boolean
 }
+
+export type InputValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: InputValidatorOptions) => InputValidator
 
 export interface CustomValidatorInterface extends ValidatorInterface {
-  model: ActiveModel
 }
+
+export type CustomValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: ValidatorOptions) => CustomValidator
 
 export interface StaticModelValidatorInterface extends ValidatorInterface {
-  model: StaticModel
+  staticModel: StaticModel
 }
 
-export type ValidationCondition<T extends ActiveModel> = (model: T) => boolean
+export type StaticModelValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: StaticModelValidatorOptions) => StaticModelValidator
+
+export type ValidationCondition<T extends Model> = (model: T) => boolean
+
+export type ErrorMessages = {[key: string]: string}
+
+export type FullValidatorOptions = ValidatorOptions & InputValidatorOptions & StaticModelValidatorOptions
+
+type InputValidatorOptions = StringValidatorOptions & InclusionValidatorOptions & NumberValidatorOptions
