@@ -65,3 +65,5 @@ export type ErrorMessages = {[key: string]: string}
 export type FullValidatorOptions = ValidatorOptions & InputValidatorOptions & StaticModelValidatorOptions
 
 type InputValidatorOptions = StringValidatorOptions & InclusionValidatorOptions & NumberValidatorOptions
+
+export type GenericValidatorOptions = ValidatorOptions & {[key: string]: any}

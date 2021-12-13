@@ -1,13 +1,13 @@
 import {
   CustomValidatorConstructor,
   ErrorMessages,
-  FullValidatorOptions,
+  GenericValidatorOptions,
   InputValidatorConstructor,
 } from './validator'
 
 export type ValidationScheme = {
   attribute: string
-  options: FullValidatorOptions
+  options: GenericValidatorOptions
   errorMessages: ErrorMessages
 }
 

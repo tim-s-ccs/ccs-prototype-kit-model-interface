@@ -5,7 +5,7 @@ import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
 import { ActiveModelInterface, Condition, DataInterfaceFunction, ModelData, ModelError, ModelSchema } from '../types/models/model'
 import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
-import { ErrorMessages, FullValidatorOptions } from '../types/validation/validator'
+import { ErrorMessages, GenericValidatorOptions } from '../types/validation/validator'
 import { Request } from 'express'
 import { TableRow } from '../types/data/tables'
 import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
@@ -42,7 +42,8 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
     if (this.validationSchema.inputValidations !== undefined){
       this.validationSchema.inputValidations.forEach(inputValidation => {
-        this.validateAttribute(call, inputValidation, inputValidation.validator)
+        // TODO: Change from any
+        this.validateAttribute(call, inputValidation, inputValidation.validator as any)
       })
     }
 
@@ -54,7 +55,8 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
     if (this.validationSchema.staticModelValidations !== undefined) {
       this.validationSchema.staticModelValidations.forEach(staticModelValidation => {
-        this.validateAttribute(call, staticModelValidation, StaticModelValidator)
+        // TODO: Change from any
+        this.validateAttribute(call, staticModelValidation, StaticModelValidator as any)
       })
     }
 
@@ -71,7 +73,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     return Object.keys(this.errors).length === 0
   }
 
-  private validateAttribute = (call: string, validation: ValidationScheme, ValidatorSubclass: new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: FullValidatorOptions) => Validator) => {
+  private validateAttribute = (call: string, validation: ValidationScheme, ValidatorSubclass: new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: GenericValidatorOptions) => Validator) => {
     const attributeValidation: Validator = new ValidatorSubclass(this, validation.attribute, validation.errorMessages, validation.options)
 
     attributeValidation.valid(call)
