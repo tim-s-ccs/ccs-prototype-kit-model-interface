@@ -8,6 +8,7 @@ export { default as CustomValidator } from './validation/validators/customValida
 export { default as InclusionValidator } from './validation/validators/inputValidators/inclusionValidator'
 export { default as NumberValidator } from './validation/validators/inputValidators/numberValidator'
 export { default as StringValidator } from './validation/validators/inputValidators/stringValidator'
+export { default as LengthValidator } from './validation/validators/inputValidators/lengthValidator'
 
 /* Export all the types */
 // Export the data types
@@ -19,7 +20,7 @@ export { ModelSchema, ModelError, ListError, Condition } from './types/models/mo
 
 // Export validation types
 export { ValidationSchema } from './types/validation/validationSchema'
-export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, ValidatorInterface, ValidationCondition, ErrorMessages } from './types/validation/validator'
+export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, LengthValidatorOptions, ValidatorInterface, ValidationCondition, ErrorMessages } from './types/validation/validator'
 
 // Export Utilities
 export { default as utils } from './utils/utils'

@@ -25,6 +25,11 @@ export type NumberValidatorOptions = ValidatorOptions & {
   lessThan?: number
 }
 
+export type LengthValidatorOptions = ValidatorOptions & {
+  min?: number
+  max?: number
+}
+
 export type StaticModelValidatorOptions = ValidatorOptions & {
   staticModel: StaticModel
 }
@@ -42,7 +47,7 @@ export interface ValidatorInterface {
 export type ValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: FullValidatorOptions) => Validator
 
 export interface InputValidatorInterface extends ValidatorInterface {
-  input: string|number|boolean
+  input: any
 }
 
 export type InputValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: InputValidatorOptions) => InputValidator
