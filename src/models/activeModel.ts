@@ -36,7 +36,13 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   }
 
   protected static nextID = (req: Request, tableName: string): number => {
-    return Math.max(...this._all(req, tableName).map(modelData => modelData.id)) + 1
+    const data: ActiveModelData[] = this._all(req, tableName)
+
+    if (data.length === 0) {
+      return 1
+    } else {
+      return Math.max(...data.map(modelData => modelData.id)) + 1
+    }
   }
 
   validate = (call: string) => {
