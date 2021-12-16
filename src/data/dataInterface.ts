@@ -10,7 +10,13 @@ const getTable = (getTables: GetTablesFunction, options: getTableOptions): Array
 
   if (options.conditions !== undefined) {
     options.conditions.forEach(condition => {
-      table = table.filter(row => row[condition.attribute] === condition.value)
+      if (condition.value !== undefined) {
+        table = table.filter(row => row[condition.attribute] === condition.value)
+      }
+
+      if (condition.values !== undefined) {
+        table = table.filter(row => condition.values?.includes(row[condition.attribute]))
+      }
     })
   }
 

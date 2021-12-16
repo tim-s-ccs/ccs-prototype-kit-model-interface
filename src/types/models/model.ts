@@ -42,7 +42,8 @@ export type ListError = {
 
 export type Condition = {
   attribute: string
-  value: any
+  value?: any
+  values?: any[]
 }
 
 export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ActiveModelData) => void
