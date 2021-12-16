@@ -35,6 +35,10 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     return getActiveTable(req, tableName, conditions)
   }
 
+  protected static count = (req: Request, tableName: string, conditions: Array<Condition>): number => {
+    return this._where(req, tableName, conditions).length
+  }
+
   protected static nextID = (req: Request, tableName: string): number => {
     const data: ActiveModelData[] = this._all(req, tableName)
 
