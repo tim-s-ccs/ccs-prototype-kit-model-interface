@@ -44,6 +44,7 @@ export type Condition = {
   attribute: string
   value?: any
   values?: any[]
+  contents?: any[]
 }
 
 export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ActiveModelData) => void

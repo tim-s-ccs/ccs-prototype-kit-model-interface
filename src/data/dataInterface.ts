@@ -17,6 +17,14 @@ const getTable = (getTables: GetTablesFunction, options: getTableOptions): Array
       if (condition.values !== undefined) {
         table = table.filter(row => condition.values?.includes(row[condition.attribute]))
       }
+
+      if (condition.contents !== undefined) {
+        table = table.filter(row => {
+          const items = row[condition.attribute]
+
+          return condition.contents?.every(item => items.includes(item))
+        })
+      }
     })
   }
 
