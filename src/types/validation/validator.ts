@@ -39,7 +39,6 @@ export interface ValidatorInterface {
   attribute: string
   errorMessages: ErrorMessages
   options: ValidatorOptions
-  condition: boolean
   error?: string
   valid(call: string): boolean
 }

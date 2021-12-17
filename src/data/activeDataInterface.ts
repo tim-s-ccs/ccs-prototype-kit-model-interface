@@ -1,4 +1,4 @@
-import frameworkConfig from '../frameworkConfig'
+import ccsModelInterfaceConfig from '../ccsModelInterfaceConfig'
 import IDMismatchError from '../errors/idMismatchError'
 import KeysDoNotMatchError from '../errors/keysDoNotMatchError'
 import RowExistsError from '../errors/rowExistsError'
@@ -10,7 +10,7 @@ import { getRow, getTable } from './dataInterface'
 import { Request } from 'express'
 import { TableRow, Tables } from '../types/data/tables'
 
-const ACTIVE_DATA_SCHEMA_PATH: string = frameworkConfig.activeDataSchemaPath
+const ACTIVE_DATA_SCHEMA_PATH: string = ccsModelInterfaceConfig.activeDataSchemaPath
 
 const activeDataSchema: ActiveDataSchema = require.main?.require(`./${ACTIVE_DATA_SCHEMA_PATH}`).default as ActiveDataSchema
 

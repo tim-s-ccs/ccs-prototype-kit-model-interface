@@ -1,9 +1,9 @@
-import frameworkConfig from '../frameworkConfig'
+import ccsModelInterfaceConfig from '../ccsModelInterfaceConfig'
 import { Condition } from '../types/models/model'
 import { getRow, getTable } from './dataInterface'
 import { TableRow, Tables } from '../types/data/tables'
 
-const STATIC_DATA_PATH: string = frameworkConfig.staticDataPath
+const STATIC_DATA_PATH: string = ccsModelInterfaceConfig.staticDataPath
 
 const staticData: Tables = require.main?.require(`./${STATIC_DATA_PATH}`).default as Tables
 

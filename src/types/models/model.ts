@@ -11,7 +11,7 @@ export interface ActiveModelInterface {
   tableName: string
   modelSchema: ModelSchema
   validationSchema: ValidationSchema
-  errors: {[key: string]: ModelError}
+  errors: ActiveModelErrors
   attributes(): object
   validate(call: string): boolean
   addError(attribute: string, error: string, message: string): void
@@ -33,6 +33,10 @@ export type ModelData = {
 export type ModelError = {
   error: string
   errorMessage: string
+}
+
+export type ActiveModelErrors = {
+  [key: string]: ModelError
 }
 
 export type ListError = {
