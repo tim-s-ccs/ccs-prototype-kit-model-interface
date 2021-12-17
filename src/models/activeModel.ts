@@ -3,7 +3,7 @@ import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
-import { ActiveModelData, ActiveModelInterface, Condition, DataInterfaceFunction, ModelError, ModelSchema } from '../types/models/model'
+import { ActiveModelData, ActiveModelErrors, ActiveModelInterface, Condition, DataInterfaceFunction, ModelSchema } from '../types/models/model'
 import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
 import { ErrorMessages, GenericValidatorOptions } from '../types/validation/validator'
 import { Request } from 'express'
@@ -17,7 +17,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   abstract modelSchema: ModelSchema
   abstract validationSchema: ValidationSchema
 
-  errors: {[key: string]: ModelError} = {}
+  errors: ActiveModelErrors = {}
 
   constructor(data: ActiveModelData) {
     super(data)

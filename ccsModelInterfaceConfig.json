@@ -1,0 +1,4 @@
+{
+  "activeDataSchemaPath": "dist/app/data/activeDataSchema",
+  "staticDataPath": "dist/app/data/staticData"
+}

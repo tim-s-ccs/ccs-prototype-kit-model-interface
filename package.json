@@ -1,7 +1,7 @@
 {
   "name": "ccs-prototype-kit-model-interface",
   "version": "0.0.1",
-  "description": "An interface for the ccs-prototype-kit to allow for the use of a sudo database and models",
+  "description": "An interface for the ccs-prototype-kit to allow for the use of a pseudo database and models",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
