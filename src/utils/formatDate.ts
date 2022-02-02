@@ -15,7 +15,7 @@ const hourToTwelveHour = (hour: number): number => {
 }
 
 const amOrPm = (hour: number): string => {
-  if (hour <= 12) {
+  if (hour < 12) {
     return 'am'
   } else {
     return 'pm'
@@ -30,7 +30,7 @@ const timePart = (date: Date): string => {
   return `${hourToTwelveHour(date.getHours())}:${addLeadingZeros(date.getMinutes(), 2)}${amOrPm(date.getHours())}`
 }
 
-const formatDate = (date: Date, withTime: false): string => {
+const formatDate = (date: Date, withTime: boolean = false): string => {
   const dateString = datePart(date)
 
   if (withTime) {

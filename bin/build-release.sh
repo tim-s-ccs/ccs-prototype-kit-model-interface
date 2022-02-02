@@ -13,6 +13,7 @@ fi
 echo "Starting to build release..."
 echo " "
 echo "This will:"
+echo "- run the test suite"
 echo "- build CCS Frontend into the 'dist/' directory"
 echo "- commit all changes and push the branch to remote"
 echo " "
@@ -24,6 +25,7 @@ if [[ $continue_prompt != 'y' ]]; then
     exit 0
 fi
 
+npm run test
 npm run build
 
 ALL_PACKAGE_VERSION=$(node -p "require('./package.json').version")
