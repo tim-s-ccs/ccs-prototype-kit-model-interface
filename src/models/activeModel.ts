@@ -1,4 +1,3 @@
-import cast from '../utils/cast'
 import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
@@ -8,6 +7,7 @@ import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../dat
 import { ErrorMessages, GenericValidatorOptions } from '../types/validation/validator'
 import { Request } from 'express'
 import { TableRow } from '../types/data/tables'
+import { utils } from '..'
 import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
 
 abstract class ActiveModel extends Model implements ActiveModelInterface {
@@ -132,14 +132,14 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
         if (attributeConstructor.prototype instanceof ActiveModel) {
           (this.data[attribute] as ActiveModel).assignAttributes(data[attribute])
         } else if (attributeConstructor.prototype instanceof StaticModel) {
-          const id = cast(data[attribute], Number)
+          const id = utils.cast(data[attribute], Number)
 
           if (this.data[attribute] === undefined || (this.data[attribute] as StaticModel).data.id !== id) {
             // TODO: Chnage to somthing that is not any
             this.data[attribute] = (attributeConstructor as any).find(id)
           }
         } else {
-          this.data[attribute] = cast(data[attribute], attributeConstructor as NumberConstructor|StringConstructor|BooleanConstructor)
+          this.data[attribute] = utils.cast(data[attribute], attributeConstructor as NumberConstructor|StringConstructor|BooleanConstructor)
         }
       }
     }
@@ -149,6 +149,8 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
 
     activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(req, dataInterface))
+
+    if ('updatedAt' in this.modelSchema) this.data['updatedAt'] = utils.getCurrentDate()
 
     dataInterface(req, this.tableName, this.data.id, this.attributes())
   }
