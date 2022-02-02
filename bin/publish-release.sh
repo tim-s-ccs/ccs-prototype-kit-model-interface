@@ -33,10 +33,8 @@ fi
 echo "📦  Publishing package..."
 
 # Try publishing
-cd package
 npm publish
 echo "🗒 Package published!"
-cd ..
 
 # Extract tag version from ./package/package.json
 ALL_PACKAGE_VERSION=$(node -p "require('./package.json').version")
