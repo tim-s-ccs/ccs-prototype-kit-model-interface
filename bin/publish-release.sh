@@ -48,8 +48,4 @@ else
     git tag $TAG -m "CCS Frontend release $TAG"
     git push --tags
     echo "🗒 Tag $TAG created and pushed to remote."
-
-    echo "🗒 Creating a release artifact..."
-    git archive -o ./release-$TAG.zip HEAD:dist
-    echo "🗒 Artifact created. Now create a release on GitHub and attach this."
 fi
