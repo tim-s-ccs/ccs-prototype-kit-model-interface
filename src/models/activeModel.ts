@@ -2,7 +2,7 @@ import Model from './model'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
-import { ActiveModelData, ActiveModelErrors, ActiveModelInterface, Condition, DataInterfaceFunction, ModelSchema } from '../types/models/model'
+import { ActiveModelData, ActiveModelErrors, ActiveModelInterface, ArrayAttributeConstructor, Condition, DataInterfaceFunction, ModelSchema, PrimitiveConstructors } from '../types/models/model'
 import { addActiveRow, getActiveRow, getActiveTable, setActiveRow } from '../data/activeDataInterface'
 import { ErrorMessages, GenericValidatorOptions } from '../types/validation/validator'
 import { Request } from 'express'
@@ -109,7 +109,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
   attributes = (): TableRow => {
     return Object.fromEntries(Object.keys(this.modelSchema).map((attribute) => {
-      if(this.modelSchema[attribute].prototype instanceof Model) {
+      if(this.modelSchema[attribute].constructor.prototype instanceof Model) {
         let attributeValue: number|undefined
 
         if (this.data[attribute] === undefined) {
@@ -129,9 +129,9 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
       if (attribute in data) {
         const attributeConstructor = this.modelSchema[attribute]
 
-        if (attributeConstructor.prototype instanceof ActiveModel) {
+        if (attributeConstructor.constructor.prototype instanceof ActiveModel) {
           (this.data[attribute] as ActiveModel).assignAttributes(data[attribute])
-        } else if (attributeConstructor.prototype instanceof StaticModel) {
+        } else if (attributeConstructor.constructor.prototype instanceof StaticModel) {
           const id = utils.cast(data[attribute], Number)
 
           if (this.data[attribute] === undefined || (this.data[attribute] as StaticModel).data.id !== id) {
@@ -139,7 +139,17 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
             this.data[attribute] = (attributeConstructor as any).find(id)
           }
         } else {
-          this.data[attribute] = utils.cast(data[attribute], attributeConstructor as NumberConstructor|StringConstructor|BooleanConstructor)
+          switch(attributeConstructor.constructor) {
+          case Array:
+            if (data[attribute] === undefined) {
+              this.data[attribute] = []
+            } else {
+              this.data[attribute] = data[attribute].map((element: string) => utils.cast(element, (attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor))
+            }
+            break
+          default:
+            this.data[attribute] = utils.cast(data[attribute], attributeConstructor.constructor as PrimitiveConstructors)
+          }
         }
       }
     }
