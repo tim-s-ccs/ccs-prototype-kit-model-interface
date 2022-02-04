@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.0 (Pre Release)
+  - When assigning attributes, you can now pass arrays [#PR 10](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/10)
+
 ## 0.1.1 (Pre Release)
   - While adding tests to the framework, a bug was found in `formatDate` which was fixed
 ## 0.1.0 (Pre Release)
