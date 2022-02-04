@@ -53,4 +53,17 @@ export type Condition = {
 
 export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ActiveModelData) => void
 
-export type ModelSchema = { [key: string]: NumberConstructor|StringConstructor|BooleanConstructor|ArrayConstructor|typeof ActiveModel|typeof StaticModel }
+export type PrimitiveConstructors = NumberConstructor|StringConstructor|BooleanConstructor
+
+type NormalAttributeConstructor = {
+  constructor: PrimitiveConstructors|typeof ActiveModel|typeof StaticModel
+}
+
+export type ArrayAttributeConstructor = {
+  constructor: ArrayConstructor
+  arrayItemConstuctor: PrimitiveConstructors
+}
+
+export type ModelSchema = {
+  [key: string]: NormalAttributeConstructor|ArrayAttributeConstructor
+}
