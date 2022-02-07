@@ -3,7 +3,7 @@ set -e
 
 # Check if there are unexpected changes. Changes to CHANGELOG.md and the
 # package.json file are expected as part of the normal release process.
-changes="$(git status --porcelain -- ':!CHANGELOG.md' ':!package.json')"
+changes="$(git status --porcelain -- ':!CHANGELOG.md' ':!package.json' ':!package-lock.json')"
 if [[ -n $changes ]]; then
   echo "⚠ Unexpected changes in your working directory:"
   echo "$changes"
