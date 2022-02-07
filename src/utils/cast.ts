@@ -1,8 +1,12 @@
-const cast = (input: string, targetType: NumberConstructor|StringConstructor|BooleanConstructor): any => {
+const cast = (input: string|undefined, targetType: NumberConstructor|StringConstructor|BooleanConstructor): string|number|boolean|undefined => {
+  if (input === undefined) return undefined
+
   switch(targetType) {
   case Number:
     if (input.length > 0) {
-      return Number(input)
+      const number = Number(input)
+
+      return isNaN(number) ? undefined : number
     } else {
       return undefined
     }
