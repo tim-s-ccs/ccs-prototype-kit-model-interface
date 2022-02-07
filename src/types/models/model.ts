@@ -1,5 +1,6 @@
 import { ActiveModel, StaticModel } from '../..'
 import { Request } from 'express'
+import { TableRow } from '../data/tables'
 import { ValidationSchema } from '../validation/validationSchema'
 
 export interface ModelInterface {
@@ -12,11 +13,13 @@ export interface ActiveModelInterface {
   modelSchema: ModelSchema
   validationSchema: ValidationSchema
   errors: ActiveModelErrors
-  attributes(): object
   validate(call: string): boolean
   addError(attribute: string, error: string, message: string): void
   errorList(): Array<ListError>
-  save(req: Request): void
+  attributes(): TableRow
+  assignAttributes(date: ActiveModelData): void
+  save(req: Request, call: string): boolean
+  create(req: Request): boolean
 }
 
 export interface StaticModelInterface {

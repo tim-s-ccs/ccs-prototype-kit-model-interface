@@ -49,7 +49,11 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     }
   }
 
+  protected beforeValidate?(): void
+
   validate = (call: string) => {
+    this.beforeValidate && this.beforeValidate()
+
     this.errors = {}
 
     if (this.validationSchema.inputValidations !== undefined){
@@ -165,12 +169,28 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     dataInterface(req, this.tableName, this.data.id, this.attributes())
   }
 
-  save = (req: Request): void => {
-    this._save(req, setActiveRow)
+  protected beforeSave?(): void
+
+  save = (req: Request, call: string = ''): boolean => {
+    if (this.validate(call)) {
+      this.beforeSave && this.beforeSave()
+
+      this._save(req, setActiveRow)
+
+      return true
+    } else {
+      return false
+    }
   }
 
+  protected beforeCreate?(): void
+
   create = (req: Request): boolean => {
+    this.beforeCreate && this.beforeCreate()
+
     if (this.validate('new')) {
+      this.beforeSave && this.beforeSave()
+
       this._save(req, addActiveRow)
 
       return true
