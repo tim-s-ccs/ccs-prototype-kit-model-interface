@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0 (Pre Release)
+  - There are now callback functions available for active models [#PR 15](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/15)
+
 ## 0.2.1 (Pre Release)
   - Small update to improve the cast method [#PR 12](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/12)
 
