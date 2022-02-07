@@ -140,7 +140,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
           if (this.data[attribute] === undefined || (this.data[attribute] as StaticModel).data.id !== id) {
             // TODO: Chnage to somthing that is not any
-            this.data[attribute] = (attributeConstructor as any).find(id)
+            this.data[attribute] = (attributeConstructor.constructor as any).find(id)
           }
         } else {
           switch(attributeConstructor.constructor) {
