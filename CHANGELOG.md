@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1 (Pre Release)
+  - Small update to improve the cast method [#PR 12](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/12)
+
 ## 0.2.0 (Pre Release)
   - When assigning attributes, you can now pass arrays [#PR 10](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/10)
 
