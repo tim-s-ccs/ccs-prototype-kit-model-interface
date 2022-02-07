@@ -4,16 +4,22 @@ import { expect } from 'chai'
 
 describe('cast', () => {
   describe('when casting to \'Number\'', () => {
+    it('returns \'undefined\' when the input is undefined', () => {
+      const result = cast(undefined, Number)
+
+      expect(result).to.eq(undefined)
+    })
+
     it('returns \'undefined\' when the input is \'\'', () => {
       const result = cast('', Number)
 
       expect(result).to.eq(undefined)
     })
 
-    it('returns \'NaN\' when the input is a random string', () => {
+    it('returns \'undefined\' when the input is a random string', () => {
       const result = cast('something', Number)
 
-      expect(result).to.be.NaN
+      expect(result).to.eq(undefined)
     })
 
     it('returns an integer when the input is an integer as a string', () => {
@@ -32,6 +38,12 @@ describe('cast', () => {
   })
 
   describe('when casting to \'String\'', () => {
+    it('returns \'undefined\' when the input is undefined', () => {
+      const result = cast(undefined, String)
+
+      expect(result).to.eq(undefined)
+    })
+
     it('returns an empty string when the input is is \'\'', () => {
       const result = cast('', String)
 
@@ -54,6 +66,12 @@ describe('cast', () => {
   })
 
   describe('when casting to \'Boolean\'', () => {
+    it('returns \'undefined\' when the input is undefined', () => {
+      const result = cast(undefined, Boolean)
+
+      expect(result).to.eq(undefined)
+    })
+
     it('returns true when the input is is \'true\'', () => {
       const result = cast('true', Boolean)
 
