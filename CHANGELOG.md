@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1 (Pre Release)
+  - Fix issue with the assign attributes method [#PR 17](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/17)
+
 ## 0.3.0 (Pre Release)
   - There are now callback functions available for active models [#PR 15](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/15)
 
