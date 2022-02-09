@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.2 (Pre Release)
+  - Fix anothor issue with the assign attributes method and the static model validator[#PR 19](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/19)
+
 ## 0.3.1 (Pre Release)
   - Fix issue with the assign attributes method [#PR 17](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/17)
 
