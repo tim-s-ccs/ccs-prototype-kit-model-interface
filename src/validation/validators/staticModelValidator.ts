@@ -13,7 +13,7 @@ class StaticModelValidator extends Validator implements StaticModelValidatorInte
   }
 
   _validate = () => {
-    if (this.model.data === undefined) {
+    if (this.model.data[this.attribute] === undefined) {
       this.error = 'required'
 
       return false
