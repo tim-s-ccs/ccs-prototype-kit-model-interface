@@ -129,6 +129,8 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
   }
 
   assignAttributes = (data: ActiveModelData): void  => {
+    if (data === undefined) return
+
     for (const attribute in this.modelSchema) {
       if (attribute in data) {
         const attributeConstructor = this.modelSchema[attribute]
