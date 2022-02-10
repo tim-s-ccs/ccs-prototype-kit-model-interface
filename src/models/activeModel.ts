@@ -169,7 +169,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
     activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(req, dataInterface))
 
-    if ('updatedAt' in this.modelSchema) this.data['updatedAt'] = utils.getCurrentDate()
+    if ('updatedAt' in this.modelSchema) this.data['updatedAt'] = utils.dateHelpers.getCurrentDateTimeString()
 
     dataInterface(req, this.tableName, this.data.id, this.attributes())
   }
