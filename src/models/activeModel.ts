@@ -153,6 +153,9 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
               this.data[attribute] = data[attribute].map((element: string) => utils.cast(element, (attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor))
             }
             break
+          case Date:
+            this.data[attribute] = `${utils.addLeadingZeros(data[attribute][2] as number, 4)}-${utils.addLeadingZeros(data[attribute][1] as number, 2)}-${utils.addLeadingZeros(data[attribute][0] as number, 2)}`
+            break
           default:
             this.data[attribute] = utils.cast(data[attribute], attributeConstructor.constructor as PrimitiveConstructors)
           }

@@ -9,18 +9,37 @@ export { default as InclusionValidator } from './validation/validators/inputVali
 export { default as NumberValidator } from './validation/validators/inputValidators/numberValidator'
 export { default as StringValidator } from './validation/validators/inputValidators/stringValidator'
 export { default as LengthValidator } from './validation/validators/inputValidators/lengthValidator'
+export { default as DateValidator } from './validation/validators/inputValidators/dateValidator'
 
 /* Export all the types */
 // Export the data types
-export { ActiveDataScheme, ActiveDataSchema} from './types/data/activeDataSchema'
+export {
+  ActiveDataScheme,
+  ActiveDataSchema
+} from './types/data/activeDataSchema'
 export { DefaultRow } from './types/data/tables'
 
 // Export the model types
-export { ModelSchema, ModelError, ListError, Condition } from './types/models/model'
+export {
+  ModelSchema,
+  ModelError,
+  ListError,
+  Condition
+} from './types/models/model'
 
 // Export validation types
 export { ValidationSchema } from './types/validation/validationSchema'
-export { ValidatorOptions, StringValidatorOptions, NumberValidatorOptions, InclusionValidatorOptions, LengthValidatorOptions, ValidatorInterface, ValidationCondition, ErrorMessages } from './types/validation/validator'
+export {
+  ValidatorOptions,
+  StringValidatorOptions,
+  NumberValidatorOptions,
+  InclusionValidatorOptions,
+  LengthValidatorOptions,
+  DateValidatorOptions,
+  ValidatorInterface,
+  ValidationCondition,
+  ErrorMessages
+} from './types/validation/validator'
 
 // Export Utilities
 export { default as utils } from './utils/utils'
