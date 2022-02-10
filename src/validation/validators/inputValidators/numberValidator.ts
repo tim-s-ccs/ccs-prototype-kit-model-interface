@@ -23,13 +23,13 @@ class NumberValidator extends InputValidator {
       return false
     }
 
-    if (this.options.greaterThan !== undefined && this.input < this.options.greaterThan) {
+    if (this.options.greaterThan !== undefined && this.input <= this.options.greaterThan) {
       this.error = 'greaterThan'
 
       return false
     }
 
-    if (this.options.lessThan !== undefined && this.input > this.options.lessThan) {
+    if (this.options.lessThan !== undefined && this.input >= this.options.lessThan) {
       this.error = 'lessThan'
 
       return false

@@ -17,7 +17,7 @@ class LengthValidator extends InputValidator {
       return false
     }
 
-    if (this.options.max !== undefined && this.input.length < this.options.max) {
+    if (this.options.max !== undefined && this.input.length > this.options.max) {
       this.error = 'lessThan'
 
       return false

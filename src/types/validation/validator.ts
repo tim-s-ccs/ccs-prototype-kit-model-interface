@@ -1,12 +1,11 @@
 import InputValidator from '../../validation/validators/inputValidator'
-import Model from '../../models/model'
 import StaticModel from '../../models/staticModel'
 import Validator from '../../validation/validator'
 import { ActiveModel, CustomValidator, StaticModelValidator } from '../..'
 
 export type ValidatorOptions = {
   on?: string[]
-  conditions?: ValidationCondition<Model>[]
+  conditions?: ValidationCondition[]
 }
 
 export type StringValidatorOptions = ValidatorOptions & {
@@ -67,7 +66,8 @@ export interface StaticModelValidatorInterface extends ValidatorInterface {
 
 export type StaticModelValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: StaticModelValidatorOptions) => StaticModelValidator
 
-export type ValidationCondition<T extends Model> = (model: T) => boolean
+// Remove the need to use any
+export type ValidationCondition = (model: any) => boolean
 
 export type ErrorMessages = {[key: string]: string}
 
