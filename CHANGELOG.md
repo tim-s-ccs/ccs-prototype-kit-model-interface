@@ -1,7 +1,10 @@
 # Changelog
 
+## 0.4.0 (Pre Release)
+  - Add date validations and the ability to assign date attributes [#PR 21](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/21)
+
 ## 0.3.2 (Pre Release)
-  - Fix anothor issue with the assign attributes method and the static model validator[#PR 19](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/19)
+  - Fix anothor issue with the assign attributes method and the static model validator [#PR 19](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/19)
 
 ## 0.3.1 (Pre Release)
   - Fix issue with the assign attributes method [#PR 17](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/17)
