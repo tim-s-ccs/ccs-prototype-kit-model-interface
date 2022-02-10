@@ -35,7 +35,7 @@ class DateValidator extends InputValidator {
         break
       case 'tommorow':
         onOrAfterDate = this.todayAtMidnight()
-        onOrAfterDate = new Date(onOrAfterDate.setDate(onOrAfterDate.getDate() + 1))
+        onOrAfterDate.setDate(onOrAfterDate.getDate() + 1)
         break
       default:
         onOrAfterDate = new Date(this.options.onOrAfterDate)
@@ -57,7 +57,7 @@ class DateValidator extends InputValidator {
         break
       case 'yesterday':
         onOrBeforeDate = this.todayAtMidnight()
-        onOrBeforeDate = new Date(onOrBeforeDate.setDate(onOrBeforeDate.getDate() - 1))
+        onOrBeforeDate.setDate(onOrBeforeDate.getDate() - 1)
         break
       default:
         onOrBeforeDate = new Date(this.options.onOrBeforeDate)
