@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1 (Pre Release)
+  - Fix some issues with validations [#PR 24](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/24)
+
 ## 0.4.0 (Pre Release)
   - Add date validations and the ability to assign date attributes [#PR 21](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/21)
 
