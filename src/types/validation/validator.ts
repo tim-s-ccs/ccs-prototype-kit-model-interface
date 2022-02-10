@@ -30,6 +30,11 @@ export type LengthValidatorOptions = ValidatorOptions & {
   max?: number
 }
 
+export type DateValidatorOptions = ValidatorOptions & {
+  onOrAfterDate?: string
+  onOrBeforeDate?: string
+}
+
 export type StaticModelValidatorOptions = ValidatorOptions & {
   staticModel: StaticModel
 }
@@ -68,6 +73,6 @@ export type ErrorMessages = {[key: string]: string}
 
 export type FullValidatorOptions = ValidatorOptions & InputValidatorOptions & StaticModelValidatorOptions
 
-type InputValidatorOptions = StringValidatorOptions & InclusionValidatorOptions & NumberValidatorOptions
+type InputValidatorOptions = StringValidatorOptions & InclusionValidatorOptions & NumberValidatorOptions & LengthValidatorOptions & DateValidatorOptions
 
 export type GenericValidatorOptions = ValidatorOptions & {[key: string]: any}

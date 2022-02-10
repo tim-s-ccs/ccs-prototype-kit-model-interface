@@ -59,7 +59,7 @@ export type DataInterfaceFunction = (req: Request, tableName: string, id: number
 export type PrimitiveConstructors = NumberConstructor|StringConstructor|BooleanConstructor
 
 type NormalAttributeConstructor = {
-  constructor: PrimitiveConstructors|typeof ActiveModel|typeof StaticModel
+  constructor: PrimitiveConstructors|DateConstructor|typeof ActiveModel|typeof StaticModel
 }
 
 export type ArrayAttributeConstructor = {
