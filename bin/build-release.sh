@@ -14,7 +14,7 @@ echo "Starting to build release..."
 echo " "
 echo "This will:"
 echo "- run the test suite"
-echo "- build CCS Frontend into the 'dist/' directory"
+echo "- build CCS Prototype Kit Model Interface into the 'dist/' directory"
 echo "- commit all changes and push the branch to remote"
 echo " "
 
