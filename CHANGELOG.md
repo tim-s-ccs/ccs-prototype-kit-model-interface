@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.5.0 (Pre Release)
+  - Update and add some date helpers [#PR 26](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/26)
+
 ## 0.4.1 (Pre Release)
   - Fix some issues with validations [#PR 24](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/24)
 
