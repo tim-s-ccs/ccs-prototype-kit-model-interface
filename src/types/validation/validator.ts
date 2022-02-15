@@ -58,7 +58,7 @@ export type InputValidatorConstructor = new (model: ActiveModel, attribute: stri
 export interface CustomValidatorInterface extends ValidatorInterface {
 }
 
-export type CustomValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: ValidatorOptions) => CustomValidator
+export type CustomValidatorConstructor = new (model: ActiveModel, attribute: string, errorMessages: ErrorMessages, options: GenericValidatorOptions) => CustomValidator
 
 export interface StaticModelValidatorInterface extends ValidatorInterface {
   staticModel: StaticModel

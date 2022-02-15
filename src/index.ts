@@ -38,6 +38,7 @@ export {
   DateValidatorOptions,
   ValidatorInterface,
   ValidationCondition,
+  GenericValidatorOptions,
   ErrorMessages
 } from './types/validation/validator'
 
