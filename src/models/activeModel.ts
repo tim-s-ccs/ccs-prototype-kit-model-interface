@@ -1,4 +1,5 @@
 import Model from './model'
+import RowNotFoundError from '../errors/rowNotFoundError'
 import StaticModel from './staticModel'
 import StaticModelValidator from '../validation/validators/staticModelValidator'
 import Validator from '../validation/validator'
@@ -166,12 +167,25 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     }
   }
 
-  private _save = (dataInterface: DataInterfaceFunction): void => {
+  private _save = (dataInterface: DataInterfaceFunction|undefined = undefined): void => {
     const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
 
     activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(dataInterface))
 
     if ('updatedAt' in this.modelSchema) this.data['updatedAt'] = utils.dateHelpers.getCurrentDateTimeString()
+
+    if (dataInterface === undefined) {
+      try {
+        ActiveModel._find(this.req, this.tableName, this.data.id)
+        dataInterface = setActiveRow
+      } catch(error) {
+        if (error instanceof RowNotFoundError) {
+          dataInterface = addActiveRow
+        } else {
+          throw error
+        }
+      }
+    }
 
     dataInterface(this.req, this.tableName, this.data.id, this.attributes())
   }
