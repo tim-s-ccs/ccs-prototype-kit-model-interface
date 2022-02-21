@@ -1,6 +1,6 @@
 {
   "name": "ccs-prototype-kit-model-interface",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "An interface for the ccs-prototype-kit to allow for the use of a pseudo database and models",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
