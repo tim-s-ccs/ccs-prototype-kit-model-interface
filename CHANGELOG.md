@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.0 (Pre Release)
+  - Add the `Request` object as an attribute on the active model [#PR 28](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/28)
+
 ## 0.5.0 (Pre Release)
   - Update and add some date helpers [#PR 26](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/26)
 
