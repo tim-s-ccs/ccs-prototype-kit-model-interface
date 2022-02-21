@@ -34,9 +34,9 @@ const getTable = (getTables: GetTablesFunction, options: getTableOptions): Array
 const getRow = (getTables: GetTablesFunction, options: getRowOptions): TableRow => {
   const table: Array<TableRow> =  getTable(getTables, options)
 
-  const row: TableRow | undefined = table.find(row => row.id === options.id)
+  const row: TableRow | undefined = table.find(row => row[options.primaryKey] === options.primaryKeyValue)
 
-  if (row === undefined) throw new RowNotFoundError(options.tableName, options.id)
+  if (row === undefined) throw new RowNotFoundError(options.tableName, options.primaryKeyValue)
 
   return row
 }

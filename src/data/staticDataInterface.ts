@@ -15,8 +15,8 @@ const getStaticTable = (tableName: string, conditions?: Array<Condition>): Array
   return getTable(getStaticTables, {tableName: tableName, conditions: conditions})
 }
 
-const getStaticRow = (tableName: string, id: number): TableRow => {
-  return getRow(getStaticTables, {tableName: tableName, id: id})
+const getStaticRow = (tableName: string, primaryKey: string, primaryKeyValue: string): TableRow => {
+  return getRow(getStaticTables, {tableName: tableName, primaryKey: primaryKey, primaryKeyValue: primaryKeyValue})
 }
 
 export { getStaticTable, getStaticRow }

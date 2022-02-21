@@ -23,7 +23,7 @@ const getActiveTable = (req: Request, tableName: string, conditions?: Array<Cond
 }
 
 const getActiveRow = (req: Request, tableName: string, id: number): TableRow => {
-  return getRow(getActiveTables, {req: req, tableName: tableName, id: id})
+  return getRow(getActiveTables, {req: req, tableName: tableName, primaryKey: 'id', primaryKeyValue: id})
 }
 
 // Updating data

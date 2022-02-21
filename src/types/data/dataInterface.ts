@@ -12,6 +12,7 @@ export type getTableOptions = {
 
 export type getRowOptions = {
   tableName: string
-  id: number
+  primaryKey: string
+  primaryKeyValue: number|string
   req?: Request
 }

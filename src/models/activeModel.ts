@@ -125,6 +125,18 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
           attributeValue = (this.data[attribute] as Model).data.id
         }
         return [`${attribute}ID`, attributeValue]
+      } else if (
+        (this.modelSchema[attribute] as ArrayAttributeConstructor).constructor === Array &&
+        (this.modelSchema[attribute] as ArrayAttributeConstructor).arrayItemConstuctor.prototype instanceof Model
+      ) {
+        let attributeValue: number[]
+
+        if (this.data[attribute] === undefined) {
+          attributeValue = []
+        } else {
+          attributeValue = (this.data[attribute] as Model[]).map(model => model.data.id)
+        }
+        return [`${attribute.slice(0, -1)}IDs`, attributeValue]
       } else {
         return [attribute, this.data[attribute]]
       }
@@ -138,39 +150,60 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
       if (attribute in data) {
         const attributeConstructor = this.modelSchema[attribute]
 
-        if (attributeConstructor.constructor.prototype instanceof ActiveModel) {
+        if (attributeConstructor.constructor === Array) {
+          const arrayItemConstuctor = (attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor
+
+          if (data[attribute] === undefined) {
+            this.data[attribute] = []
+          } else {
+            if (arrayItemConstuctor.prototype instanceof ActiveModel) {
+              const activeModels: {[id: number]: ActiveModelData} = (data[attribute] as ActiveModelData[]).reduce((models: {[id: number]: ActiveModelData}, activeModelData: ActiveModelData) => {
+                models[activeModelData.id] = activeModelData
+                return models
+              }, {})
+
+              this.data[attribute].forEach((activeModel: ActiveModel) => {
+                activeModel.assignAttributes(activeModels[activeModel.data.id])
+              })
+            } else if (arrayItemConstuctor.prototype instanceof StaticModel) {
+              // TODO: Chnage to somthing that is not any
+              this.data[attribute] = data[attribute].map((primaryKeyValue: string) => (arrayItemConstuctor as any).find(primaryKeyValue))
+            } else if (arrayItemConstuctor === Date) {
+              this.data[attribute] = data[attribute].map((date: number[]) => {
+                return `${utils.addLeadingZeros(date[2], 4)}-${utils.addLeadingZeros(date[1], 2)}-${utils.addLeadingZeros(date[0], 2)}`
+              })
+            } else {
+              this.data[attribute] = data[attribute].map((element: string) => utils.cast(element, arrayItemConstuctor as PrimitiveConstructors))
+            }
+          }
+        } else if (attributeConstructor.constructor.prototype instanceof ActiveModel) {
           (this.data[attribute] as ActiveModel).assignAttributes(data[attribute])
         } else if (attributeConstructor.constructor.prototype instanceof StaticModel) {
-          const id = utils.cast(data[attribute], Number)
+          const primaryKeyValue = utils.cast(data[attribute], String)
 
-          if (this.data[attribute] === undefined || (this.data[attribute] as StaticModel).data.id !== id) {
+          if (this.data[attribute] === undefined || (this.data[attribute] as StaticModel).data.id !== primaryKeyValue) {
             // TODO: Chnage to somthing that is not any
-            this.data[attribute] = (attributeConstructor.constructor as any).find(id)
+            this.data[attribute] = (attributeConstructor.constructor as any).find(primaryKeyValue)
           }
+        } else if (attributeConstructor.constructor === Date) {
+          this.data[attribute] = `${utils.addLeadingZeros(data[attribute][2] as number, 4)}-${utils.addLeadingZeros(data[attribute][1] as number, 2)}-${utils.addLeadingZeros(data[attribute][0] as number, 2)}`
         } else {
-          switch(attributeConstructor.constructor) {
-          case Array:
-            if (data[attribute] === undefined) {
-              this.data[attribute] = []
-            } else {
-              this.data[attribute] = data[attribute].map((element: string) => utils.cast(element, (attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor))
-            }
-            break
-          case Date:
-            this.data[attribute] = `${utils.addLeadingZeros(data[attribute][2] as number, 4)}-${utils.addLeadingZeros(data[attribute][1] as number, 2)}-${utils.addLeadingZeros(data[attribute][0] as number, 2)}`
-            break
-          default:
-            this.data[attribute] = utils.cast(data[attribute], attributeConstructor.constructor as PrimitiveConstructors)
-          }
+          this.data[attribute] = utils.cast(data[attribute], attributeConstructor.constructor as PrimitiveConstructors)
         }
       }
     }
   }
 
   private _save = (dataInterface: DataInterfaceFunction|undefined = undefined): void => {
-    const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
+    Object.keys(this.modelSchema).forEach((attribute) => {
+      const attributeConstructor = this.modelSchema[attribute]
 
-    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(dataInterface))
+      if (attributeConstructor.constructor === Array && (attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor.prototype instanceof ActiveModel) {
+        this.data[attribute].forEach((activeModel: ActiveModel) => activeModel._save())
+      } else if (attributeConstructor.constructor.prototype instanceof ActiveModel) {
+        (this.data[attribute] as ActiveModel)._save()
+      }
+    })
 
     if ('updatedAt' in this.modelSchema) this.data['updatedAt'] = utils.dateHelpers.getCurrentDateTimeString()
 
