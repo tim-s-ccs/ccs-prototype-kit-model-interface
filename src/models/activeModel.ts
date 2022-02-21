@@ -11,6 +11,7 @@ import { utils } from '..'
 import { ValidationSchema, ValidationScheme } from '../types/validation/validationSchema'
 
 abstract class ActiveModel extends Model implements ActiveModelInterface {
+  req: Request
   data: ActiveModelData = this.data
 
   abstract tableName: string
@@ -19,8 +20,9 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
   errors: ActiveModelErrors = {}
 
-  constructor(data: ActiveModelData) {
+  constructor(req: Request, data: ActiveModelData) {
     super(data)
+    this.req = req
   }
 
   // TODO: Possilby static init model
@@ -164,23 +166,23 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     }
   }
 
-  private _save = (req: Request, dataInterface: DataInterfaceFunction): void => {
+  private _save = (dataInterface: DataInterfaceFunction): void => {
     const activeModelAttributes: Array<string> = Object.keys(this.data).filter((attribute) => this.data[attribute] instanceof ActiveModel)
 
-    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(req, dataInterface))
+    activeModelAttributes.forEach(activeModelAttribute => (this.data[activeModelAttribute] as ActiveModel)._save(dataInterface))
 
     if ('updatedAt' in this.modelSchema) this.data['updatedAt'] = utils.dateHelpers.getCurrentDateTimeString()
 
-    dataInterface(req, this.tableName, this.data.id, this.attributes())
+    dataInterface(this.req, this.tableName, this.data.id, this.attributes())
   }
 
   protected beforeSave?(): void
 
-  save = (req: Request, call: string = ''): boolean => {
+  save = (call: string = ''): boolean => {
     if (this.validate(call)) {
       this.beforeSave && this.beforeSave()
 
-      this._save(req, setActiveRow)
+      this._save(setActiveRow)
 
       return true
     } else {
@@ -190,13 +192,13 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
   protected beforeCreate?(): void
 
-  create = (req: Request): boolean => {
+  create = (): boolean => {
     this.beforeCreate && this.beforeCreate()
 
     if (this.validate('new')) {
       this.beforeSave && this.beforeSave()
 
-      this._save(req, addActiveRow)
+      this._save(addActiveRow)
 
       return true
     } else {

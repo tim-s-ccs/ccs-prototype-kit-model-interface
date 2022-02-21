@@ -8,6 +8,7 @@ export interface ModelInterface {
 }
 
 export interface ActiveModelInterface {
+  req: Request
   data: ActiveModelData
   tableName: string
   modelSchema: ModelSchema
@@ -18,8 +19,8 @@ export interface ActiveModelInterface {
   errorList(): Array<ListError>
   attributes(): TableRow
   assignAttributes(date: ActiveModelData): void
-  save(req: Request, call: string): boolean
-  create(req: Request): boolean
+  save(call: string): boolean
+  create(): boolean
 }
 
 export interface StaticModelInterface {
