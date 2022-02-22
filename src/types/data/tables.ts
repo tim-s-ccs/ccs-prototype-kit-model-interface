@@ -1,5 +1,5 @@
 export type DefaultRow = {
-  id: number
+  id: string
 }
 
 export type TableRow = DefaultRow & {

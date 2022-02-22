@@ -22,12 +22,12 @@ const getActiveTable = (req: Request, tableName: string, conditions?: Array<Cond
   return getTable(getActiveTables, {req: req, tableName: tableName, conditions: conditions})
 }
 
-const getActiveRow = (req: Request, tableName: string, id: number): TableRow => {
+const getActiveRow = (req: Request, tableName: string, id: string): TableRow => {
   return getRow(getActiveTables, {req: req, tableName: tableName, primaryKey: 'id', primaryKeyValue: id})
 }
 
 // Updating data
-const validateSentDataSet = (req: Request, tableName: string, id: number, sentData: ActiveModelData) => {
+const validateSentDataSet = (req: Request, tableName: string, id: string, sentData: ActiveModelData) => {
   const rowScheme: ActiveDataScheme = activeDataSchema[tableName]
 
   const rowKeys: Array<string> = Object.keys(rowScheme).sort()
@@ -44,7 +44,7 @@ const validateSentDataSet = (req: Request, tableName: string, id: number, sentDa
   if (getActiveRow(req, tableName, id).id !== sentData.id) throw new IDMismatchError()
 }
 
-const setActiveRow = (req: Request, tableName: string, id: number, data: ActiveModelData) => {
+const setActiveRow = (req: Request, tableName: string, id: string, data: ActiveModelData) => {
   validateSentDataSet(req, tableName, id, data)
 
   const tables: Tables = getActiveTables(req)
@@ -55,7 +55,7 @@ const setActiveRow = (req: Request, tableName: string, id: number, data: ActiveM
 }
 
 // Creating data
-const validateSentDataNew = (req: Request, tableName: string, id: number, sentData: ActiveModelData) => {
+const validateSentDataNew = (req: Request, tableName: string, id: string, sentData: ActiveModelData) => {
   const rowScheme: ActiveDataScheme = activeDataSchema[tableName]
 
   const rowKeys: Array<string> = Object.keys(rowScheme).sort()
@@ -78,7 +78,7 @@ const validateSentDataNew = (req: Request, tableName: string, id: number, sentDa
   }
 }
 
-const addActiveRow = (req: Request, tableName: string, id: number, data: ActiveModelData) => {
+const addActiveRow = (req: Request, tableName: string, id: string, data: ActiveModelData) => {
   validateSentDataNew(req, tableName, id, data)
 
   const tables: Tables = getActiveTables(req)

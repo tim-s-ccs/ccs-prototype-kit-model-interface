@@ -13,6 +13,6 @@ export type getTableOptions = {
 export type getRowOptions = {
   tableName: string
   primaryKey: string
-  primaryKeyValue: number|string
+  primaryKeyValue: string
   req?: Request
 }
