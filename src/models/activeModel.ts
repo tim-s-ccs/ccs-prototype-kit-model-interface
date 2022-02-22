@@ -42,14 +42,8 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     return this._where(req, tableName, conditions).length
   }
 
-  protected static nextID = (req: Request, tableName: string): number => {
-    const data: ActiveModelData[] = this._all(req, tableName)
-
-    if (data.length === 0) {
-      return 1
-    } else {
-      return Math.max(...data.map(modelData => modelData.id)) + 1
-    }
+  protected static generateID = (): string => {
+    return utils.addLeadingZeros(Math.floor(Math.random() * 100000), 6)
   }
 
   protected beforeValidate?(): void
@@ -157,7 +151,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
             this.data[attribute] = []
           } else {
             if (arrayItemConstuctor.prototype instanceof ActiveModel) {
-              const activeModels: {[id: number]: ActiveModelData} = (data[attribute] as ActiveModelData[]).reduce((models: {[id: number]: ActiveModelData}, activeModelData: ActiveModelData) => {
+              const activeModels: {[id: string]: ActiveModelData} = (data[attribute] as ActiveModelData[]).reduce((models: {[id: string]: ActiveModelData}, activeModelData: ActiveModelData) => {
                 models[activeModelData.id] = activeModelData
                 return models
               }, {})

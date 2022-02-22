@@ -27,7 +27,7 @@ export interface StaticModelInterface {
 }
 
 export type ActiveModelData = ModelData & {
-  id: number
+  id: string
 }
 
 export type ModelData = {
@@ -55,7 +55,7 @@ export type Condition = {
   contents?: any[]
 }
 
-export type DataInterfaceFunction = (req: Request, tableName: string, id: number, data: ActiveModelData) => void
+export type DataInterfaceFunction = (req: Request, tableName: string, id: string, data: ActiveModelData) => void
 
 export type PrimitiveConstructors = NumberConstructor|StringConstructor|BooleanConstructor
 
