@@ -1,5 +1,10 @@
 # Changelog
 
+# 0.7.0 (Pre Release)
+  - Add the ability to create new models while saving models [#PR 30](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/30)
+  - Add the ability to save when there is an array of models [#PR 31](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/31)
+  - Change IDs so they are strings for both static and active models [#PR 31](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/31) & [#PR 32](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/32)
+
 ## 0.6.0 (Pre Release)
   - Add the `Request` object as an attribute on the active model [#PR 28](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/28)
 
