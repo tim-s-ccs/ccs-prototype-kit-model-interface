@@ -42,4 +42,5 @@ export {
 } from './types/validation/validator'
 
 // Export Utilities
+export { Period } from './types/utils/dateHelpers'
 export { default as utils } from './utils/utils'
