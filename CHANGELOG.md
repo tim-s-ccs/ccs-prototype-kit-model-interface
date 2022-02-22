@@ -1,6 +1,10 @@
 # Changelog
 
-# 0.7.0 (Pre Release)
+## 0.7.1 (Pre Release)
+  - Add a period to string [#PR 34](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/34)
+  - Add a helper to calculate a date period in time  [#PR 35](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/35)
+
+## 0.7.0 (Pre Release)
   - Add the ability to create new models while saving models [#PR 30](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/30)
   - Add the ability to save when there is an array of models [#PR 31](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/31)
   - Change IDs so they are strings for both static and active models [#PR 31](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/31) & [#PR 32](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/32)
