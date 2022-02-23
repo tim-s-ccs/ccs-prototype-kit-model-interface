@@ -21,12 +21,61 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
 
   errors: ActiveModelErrors = {}
 
-  constructor(req: Request, data: ActiveModelData) {
-    super(data)
+  constructor(req: Request, data: ActiveModelData, modelSchema: ModelSchema) {
+    super(ActiveModel.initData(req, data, modelSchema))
     this.req = req
   }
 
-  // TODO: Possilby static init model
+  // TODO: Change references to any
+  private static initData = (req: Request, data: ActiveModelData, modelSchema: ModelSchema): ActiveModelData => {
+    return Object.fromEntries(Object.keys(modelSchema).map((attribute) => {
+      const attributeConstructor = modelSchema[attribute]
+
+      if(attributeConstructor.constructor.prototype instanceof ActiveModel) {
+        const attributeValue: number|undefined = data[`${attribute}ID`]
+
+        if (attributeValue !== undefined) {
+          return [attribute, (attributeConstructor.constructor as any).find(req, attributeValue)]
+        } else {
+          return [attribute, undefined]
+        }
+      } else if (attributeConstructor.constructor.prototype instanceof StaticModel) {
+        const attributeValue: number|undefined = data[`${attribute}ID`]
+
+        if (attributeValue !== undefined) {
+          return [attribute, (attributeConstructor.constructor as any).find(attributeValue)]
+        } else {
+          return [attribute, undefined]
+        }
+      } else if (attributeConstructor.constructor === Array) {
+        if ((attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor.prototype instanceof ActiveModel) {
+          const attributeValue: number[]|undefined = data[`${attribute.slice(0, -1)}IDs`]
+
+          if (attributeValue !== undefined) {
+            return [attribute, attributeValue.map(activeModelID => ((attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor as any).find(req, activeModelID))]
+          } else {
+            return [attribute, []]
+          }
+        } else if ((attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor.prototype instanceof StaticModel) {
+          const attributeValue: number[]|undefined = data[`${attribute.slice(0, -1)}IDs`]
+
+          if (attributeValue !== undefined) {
+            return [attribute, attributeValue.map(staticModelID => ((attributeConstructor as ArrayAttributeConstructor).arrayItemConstuctor as any).find(staticModelID))]
+          } else {
+            return [attribute, []]
+          }
+        } else {
+          if (data[attribute] !== undefined) {
+            return [attribute, data[attribute]]
+          } else {
+            return [attribute, []]
+          }
+        }
+      } else {
+        return [attribute, data[attribute]]
+      }
+    })) as ActiveModelData
+  }
 
   protected static _find = getActiveRow
 
