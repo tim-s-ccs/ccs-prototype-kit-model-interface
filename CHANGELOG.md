@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 (Pre Release)
+  - The data for active models can now automatically initialise [#PR 37](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/37)
+  - Assign attributes will create an active model if it does not exist [#PR 38](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/38)
+
 ## 0.7.1 (Pre Release)
   - Add a period to string [#PR 34](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/34)
   - Add a helper to calculate a date period in time  [#PR 35](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/35)
