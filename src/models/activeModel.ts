@@ -220,7 +220,11 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
             }
           }
         } else if (attributeConstructor.constructor.prototype instanceof ActiveModel) {
-          (this.data[attribute] as ActiveModel).assignAttributes(req, data[attribute])
+          if (this.data[attribute] === undefined) {
+            this.data[attribute] = (attributeConstructor.constructor as any).build(req, data[attribute])
+          } else {
+            (this.data[attribute] as ActiveModel).assignAttributes(req, data[attribute])
+          }
         } else if (attributeConstructor.constructor.prototype instanceof StaticModel) {
           const primaryKeyValue = utils.cast(data[attribute], String)
 
