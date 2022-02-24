@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.1 (Pre Release)
+  - Remove need to pass request object as it is an attribute in the model [#PR 40](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/40)
+
 ## 0.8.0 (Pre Release)
   - The data for active models can now automatically initialise [#PR 37](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/37)
   - Assign attributes will create an active model if it does not exist [#PR 38](https://github.com/tim-s-ccs/ccs-prototype-kit-model-interface/pull/38)
