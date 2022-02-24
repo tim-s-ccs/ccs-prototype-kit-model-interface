@@ -18,7 +18,7 @@ export interface ActiveModelInterface {
   addError(attribute: string, error: string, message: string): void
   errorList(): Array<ListError>
   attributes(): TableRow
-  assignAttributes(req: Request, data?: ActiveModelData): void
+  assignAttributes(data?: ActiveModelData): void
   save(call: string): boolean
   create(): boolean
 }
