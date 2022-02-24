@@ -186,7 +186,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
     })) as TableRow
   }
 
-  assignAttributes = (req: Request, data?: ActiveModelData): void  => {
+  assignAttributes = (data?: ActiveModelData): void  => {
     if (data === undefined) return
 
     for (const attribute in this.modelSchema) {
@@ -206,7 +206,7 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
               }, {})
 
               this.data[attribute].forEach((activeModel: ActiveModel) => {
-                activeModel.assignAttributes(req, activeModels[activeModel.data.id])
+                activeModel.assignAttributes(activeModels[activeModel.data.id])
               })
             } else if (arrayItemConstuctor.prototype instanceof StaticModel) {
               // TODO: Chnage to somthing that is not any
@@ -221,9 +221,9 @@ abstract class ActiveModel extends Model implements ActiveModelInterface {
           }
         } else if (attributeConstructor.constructor.prototype instanceof ActiveModel) {
           if (this.data[attribute] === undefined) {
-            this.data[attribute] = (attributeConstructor.constructor as any).build(req, data[attribute])
+            this.data[attribute] = (attributeConstructor.constructor as any).build(this.req, data[attribute])
           } else {
-            (this.data[attribute] as ActiveModel).assignAttributes(req, data[attribute])
+            (this.data[attribute] as ActiveModel).assignAttributes(data[attribute])
           }
         } else if (attributeConstructor.constructor.prototype instanceof StaticModel) {
           const primaryKeyValue = utils.cast(data[attribute], String)
